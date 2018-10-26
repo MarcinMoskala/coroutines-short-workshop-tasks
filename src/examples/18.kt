@@ -5,15 +5,25 @@ package examples
 import kotlinx.coroutines.experimental.*
 import kotlin.system.measureTimeMillis
 
-suspend fun concurrentSum(): Int = coroutineScope {
-    val one = async { doSomethingUsefulOne() }
-    val two = async { doSomethingUsefulTwo() }
-    one.await() + two.await()
-}
-
 fun main(args: Array<String>) = runBlocking {
-    val time = measureTimeMillis {
-        println("The answer is ${concurrentSum()}")
+    val supervisor = SupervisorJob()
+    with(CoroutineScope(coroutineContext + supervisor)) {
+        val firstChild = launch(CoroutineExceptionHandler { _, _ ->  }) {
+            println("First child is failing")
+            throw AssertionError("First child is cancelled")
+        }
+        val secondChild = launch {
+            firstChild.join()
+            println("First child is cancelled: ${firstChild.isCancelled}, but second one is still active")
+            try {
+                delay(Long.MAX_VALUE)
+            } finally {
+                println("Second child is cancelled because supervisor is cancelled")
+            }
+        }
+        firstChild.join()
+        println("Cancelling supervisor")
+        supervisor.cancel()
+        secondChild.join()
     }
-    println("Completed in $time ms")
 }

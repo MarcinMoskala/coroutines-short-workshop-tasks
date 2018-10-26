@@ -4,23 +4,18 @@ package examples
 
 import kotlinx.coroutines.experimental.*
 
-fun main(args: Array<String>) = runBlocking {
-    val job = launch {
-        try {
-            repeat(1000) { i ->
-                println("I'm sleeping $i ...")
-                delay(500L)
-            }
-        } finally {
-            withContext(NonCancellable) {
-                println("I'm running finally")
-                delay(1000L)
-                println("And I've just delayed for 1 sec because I'm non-cancellable")
-            }
-        }
+fun main(args: Array<String>) = runBlocking<Unit> {
+    fun getThreadName() = Thread.currentThread().name
+    launch {
+        println("main runBlocking      : I'm working in thread ${getThreadName()}")
     }
-    delay(1300L)
-    println("main: I'm tired of waiting!")
-    job.cancelAndJoin()
-    println("main: Now I can quit.")
+    launch(Dispatchers.Unconfined) {
+        println("Unconfined            : I'm working in thread ${getThreadName()}")
+    }
+    launch(Dispatchers.Default) {
+        println("Default               : I'm working in thread ${getThreadName()}")
+    }
+    launch(newSingleThreadContext("MyOwnThread")) {
+        println("newSingleThreadContext: I'm working in thread ${getThreadName()}")
+    }
 }

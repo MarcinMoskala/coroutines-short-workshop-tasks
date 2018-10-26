@@ -3,12 +3,13 @@
 package examples
 
 import kotlinx.coroutines.experimental.*
+import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) = runBlocking {
-    withTimeout(1300L) {
-        repeat(1000) { i ->
-            println("I'm sleeping $i ...")
-            delay(500L)
-        }
+    val time = measureTimeMillis {
+        val one = async { doSomethingUsefulOne() }
+        val two = async { doSomethingUsefulTwo() }
+        println("The answer is ${one.await() + two.await()}")
     }
+    println("Completed in $time ms")
 }

@@ -1,21 +1,16 @@
 @file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
 
-package examples
+package examples.new3
 
+import examples.massiveRun
 import kotlinx.coroutines.experimental.*
+import java.util.concurrent.atomic.AtomicInteger
 
-val threadLocal = ThreadLocal<String?>()
+private var counter = AtomicInteger()
 
-fun main(args: Array<String>) = runBlocking {
-    fun threadName() = Thread.currentThread().name
-
-    threadLocal.set("main")
-    println("Pre-main, current thread: ${threadName()}, thread local value: '${threadLocal.get()}'")
-    val job = launch(Dispatchers.Default + threadLocal.asContextElement(value = "launch")) {
-        println("Launch, thread: ${threadName()}, value: '${threadLocal.get()}'")
-        yield()
-        println("Yielded, thread: ${threadName()}, value: '${threadLocal.get()}'")
+fun main(args: Array<String>) = runBlocking<Unit> {
+    GlobalScope.massiveRun {
+        counter.incrementAndGet()
     }
-    job.join()
-    println("Post-main, thread: ${threadName()}, value: '${threadLocal.get()}'")
+    println("Counter = ${counter.get()}")
 }

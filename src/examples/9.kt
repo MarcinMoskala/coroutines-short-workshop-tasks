@@ -3,20 +3,18 @@
 package examples
 
 import kotlinx.coroutines.experimental.*
+import kotlin.coroutines.experimental.Continuation
+import kotlin.coroutines.experimental.CoroutineContext
 
-fun main(args: Array<String>) = runBlocking {
-    val job = launch {
-        try {
-            repeat(1000) { i ->
-                println("I'm sleeping $i ...")
-                delay(500L)
-            }
-        } finally {
-            println("I'm running finally")
-        }
-    }
-    delay(1300L)
-    println("main: I'm tired of waiting!")
-    job.cancelAndJoin()
-    println("main: Now I can quit.")
+public interface ContinuationInterceptor : CoroutineContext.Element {
+
+    public fun <T> interceptContinuation(
+            continuation: Continuation<T>
+    ): Continuation<T>
+
+    public fun releaseInterceptedContinuation(
+            continuation: Continuation<*>
+    ) {  }
+
+    companion object Key : CoroutineContext.Key<ContinuationInterceptor>
 }

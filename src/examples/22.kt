@@ -4,19 +4,20 @@ package examples
 
 import kotlinx.coroutines.experimental.*
 
-fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
+var counter = 0
 
-fun main(args: Array<String>) = runBlocking(CoroutineName("main")) {
-    log("Started main coroutine")
-    val v1 = async(CoroutineName("v1coroutine")) {
-        delay(500)
-        log("Computing v1")
-        252
+fun main(args: Array<String>) = runBlocking {
+    GlobalScope.massiveRun {
+        counter++
     }
-    val v2 = async(CoroutineName("v2coroutine")) {
-        delay(1000)
-        log("Computing v2")
-        6
+    println("Counter = ${counter}")
+}
+
+suspend fun CoroutineScope.massiveRun(action: suspend () -> Unit) {
+    val jobs = List(1000) {
+        launch {
+            repeat(1000) { action() }
+        }
     }
-    log("The answer for v1 / v2 = ${v1.await() / v2.await()}")
+    jobs.forEach { it.join() }
 }

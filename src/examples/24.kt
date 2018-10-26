@@ -1,24 +1,20 @@
 @file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
 
-package examples
+package examples.new2
 
+import examples.massiveRun
 import kotlinx.coroutines.experimental.*
 
+private var counter = 0
+
 fun main(args: Array<String>) = runBlocking {
-    val job = GlobalScope.launch {
-        println("Throwing exception from launch")
-        throw IndexOutOfBoundsException()
+    val counterContext =
+            newSingleThreadContext("CounterContext")
+
+    GlobalScope.massiveRun {
+        withContext(counterContext) {
+            counter++
+        }
     }
-    job.join()
-    println("Joined failed job")
-    val deferred = GlobalScope.async {
-        println("Throwing exception from async")
-        throw ArithmeticException()
-    }
-    try {
-        deferred.await()
-        println("Unreached")
-    } catch (e: ArithmeticException) {
-        println("Caught ArithmeticException")
-    }
+    println("Counter = $counter")
 }

@@ -5,21 +5,26 @@ package examples
 import kotlinx.coroutines.experimental.*
 import kotlin.system.measureTimeMillis
 
-suspend fun doSomethingUsefulOne(): Int {
-    delay(1000)
-    return 1
-}
-
-suspend fun doSomethingUsefulTwo(): Int {
-    delay(1000)
-    return 2
+suspend fun failedConcurrentSum(): Int = coroutineScope {
+    val one = async {
+        try {
+            delay(Long.MAX_VALUE)
+            42
+        } finally {
+            println("First child was cancelled")
+        }
+    }
+    val two = async<Int> {
+        println("2nd child throws an exception")
+        throw ArithmeticException()
+    }
+    one.await() + two.await()
 }
 
 fun main(args: Array<String>) = runBlocking<Unit> {
-    val time = measureTimeMillis {
-        val one = doSomethingUsefulOne()
-        val two = doSomethingUsefulTwo()
-        println("The answer is ${one + two}")
+    try {
+        failedConcurrentSum()
+    } catch (e: ArithmeticException) {
+        println("Computation failed with ArithmeticException")
     }
-    println("Completed in $time ms")
 }

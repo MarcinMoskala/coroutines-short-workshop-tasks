@@ -4,18 +4,22 @@ package examples
 
 import kotlinx.coroutines.experimental.*
 
-fun main(args: Array<String>) = runBlocking<Unit> {
-    fun getThreadName() = Thread.currentThread().name
-    launch {
-        println("main runBlocking      : I'm working in thread ${getThreadName()}")
-    }
-    launch(Dispatchers.Unconfined) {
-        println("Unconfined            : I'm working in thread ${getThreadName()}")
-    }
-    launch(Dispatchers.Default) {
-        println("Default               : I'm working in thread ${getThreadName()}")
-    }
-    launch(newSingleThreadContext("MyOwnThread")) {
-        println("newSingleThreadContext: I'm working in thread ${getThreadName()}")
+fun main(args: Array<String>) = runBlocking {
+    try {
+        supervisorScope {
+            launch {
+                try {
+                    println("Child is sleeping")
+                    delay(Long.MAX_VALUE)
+                } finally {
+                    println("Child is cancelled")
+                }
+            }
+            yield()
+            println("Throwing exception from scope")
+            throw AssertionError()
+        }
+    } catch(e: AssertionError) {
+        println("Caught assertion error")
     }
 }

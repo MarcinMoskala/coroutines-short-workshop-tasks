@@ -6,10 +6,10 @@ import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.runBlocking
 
 fun main(args: Array<String>) = runBlocking {
-    val job = GlobalScope.launch {
+    GlobalScope.launch {
         delay(1000L)
         println("World!")
     }
     println("Hello,")
-    job.join()
+    delay(2000L)
 }

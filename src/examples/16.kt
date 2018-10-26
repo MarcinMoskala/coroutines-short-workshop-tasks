@@ -5,14 +5,19 @@ package examples
 import kotlinx.coroutines.experimental.*
 import kotlin.system.measureTimeMillis
 
-fun main(args: Array<String>) = runBlocking<Unit> {
-    val time = measureTimeMillis {
-        val one = async(start = CoroutineStart.LAZY) { doSomethingUsefulOne() }
-        val two = async(start = CoroutineStart.LAZY) { doSomethingUsefulTwo() }
+fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
 
-        one.start()
-        two.start()
-        println("The answer is ${one.await() + two.await()}")
+fun main(args: Array<String>) = runBlocking(CoroutineName("main")) {
+    log("Started main coroutine")
+    val v1 = async(CoroutineName("v1coroutine")) {
+        delay(500)
+        log("Computing v1")
+        252
     }
-    println("Completed in $time ms")
+    val v2 = async(CoroutineName("v2coroutine")) {
+        delay(1000)
+        log("Computing v2")
+        6
+    }
+    log("The answer for v1 / v2 = ${v1.await() / v2.await()}")
 }
