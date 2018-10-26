@@ -15,7 +15,7 @@ abstract class BasePresenter(val onError: (Throwable) -> Unit = {}) {
 }
 
 @Suppress("FunctionName")
-class SieveTests {
+class BasePresenterTests {
 
     class FakePresenter(
             private val jobInterceptor: (() -> Unit)? = null,
@@ -65,8 +65,8 @@ class SieveTests {
                 }
         )
         presenter.onCreate()
-        delay(200)
         presenter.onDestroy()
+        delay(100)
         threads.forEach {
             assert(it.name.startsWith("UIThread")) { "We should switch to UI thread, and now we are on ${it.name}" }
         }
@@ -81,8 +81,7 @@ class SieveTests {
                 onError = { errors += it }
         )
         presenter.onCreate()
-        delay(200)
-        presenter.onDestroy()
+        delay(100)
         assertEquals(listOf(error, error), errors)
     }
 }
