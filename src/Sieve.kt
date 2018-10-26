@@ -6,6 +6,23 @@ val primes = buildSequence<Int> {
     TODO()
 }
 
+// TODO: Delete it and replace it with sequence builder (above)
+fun getPrimeNumbers(num: Int): List<Int> {
+    var numbers = generateSequence(2) { it + 1 }
+    var primes = listOf<Int>()
+    repeat(num) {
+        val prime = numbers.first()
+        primes += prime
+        numbers = numbers.drop(1).filter { it % prime != 0 }
+    }
+    return primes
+}
+
+fun main(args: Array<String>) {
+    print(getPrimeNumbers(20))
+    // print(primes.take(20).toList())
+}
+
 @Suppress("FunctionName")
 class SieveTests {
 
