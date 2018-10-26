@@ -1,8 +1,7 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.runBlocking
 import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) = runBlocking {

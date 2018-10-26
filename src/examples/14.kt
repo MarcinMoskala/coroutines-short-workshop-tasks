@@ -1,9 +1,9 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
 package examples
 
-import kotlinx.coroutines.experimental.*
-import kotlin.system.measureTimeMillis
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.coroutineScope
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.runBlocking
 
 suspend fun failedConcurrentSum(): Int = coroutineScope {
     val one = async {

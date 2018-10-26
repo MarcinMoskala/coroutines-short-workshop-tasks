@@ -1,8 +1,9 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.cancelAndJoin
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 
 fun main(args: Array<String>) = runBlocking {
     val job = launch {
@@ -16,7 +17,7 @@ fun main(args: Array<String>) = runBlocking {
         }
     }
     delay(1300L)
-    println("main: I'm tired of waiting!")
+    println("examples.main: I'm tired of waiting!")
     job.cancelAndJoin()
-    println("main: Now I can quit.")
+    println("examples.main: Now I can quit.")
 }

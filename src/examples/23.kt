@@ -1,9 +1,8 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
-package examples.new3
+package examples.new1
 
 import examples.massiveRun
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.GlobalScope
+import kotlinx.coroutines.experimental.runBlocking
 import java.util.concurrent.atomic.AtomicInteger
 
 private var counter = AtomicInteger()

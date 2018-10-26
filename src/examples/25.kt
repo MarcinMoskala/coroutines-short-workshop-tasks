@@ -1,9 +1,8 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
-package examples.new
+package examples.new3
 
 import examples.massiveRun
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.GlobalScope
+import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.coroutines.experimental.sync.Mutex
 import kotlinx.coroutines.experimental.sync.withLock
 

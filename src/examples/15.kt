@@ -1,14 +1,13 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
 package examples
 
-import kotlinx.coroutines.experimental.*
-import kotlin.system.measureTimeMillis
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 
 fun main(args: Array<String>) = runBlocking {
     val request = launch {
         repeat(3) { i ->
-            launch  {
+            launch {
                 delay((i + 1) * 200L)
                 println("Coroutine $i is done")
             }

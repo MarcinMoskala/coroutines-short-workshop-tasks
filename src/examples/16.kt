@@ -1,14 +1,14 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
 package examples
 
-import kotlinx.coroutines.experimental.*
-import kotlin.system.measureTimeMillis
+import kotlinx.coroutines.experimental.CoroutineName
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.runBlocking
 
 fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
 
-fun main(args: Array<String>) = runBlocking(CoroutineName("main")) {
-    log("Started main coroutine")
+fun main(args: Array<String>) = runBlocking(CoroutineName("examples.main")) {
+    log("Started examples.main coroutine")
     val v1 = async(CoroutineName("v1coroutine")) {
         delay(500)
         log("Computing v1")

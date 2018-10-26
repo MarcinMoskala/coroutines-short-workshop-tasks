@@ -1,13 +1,14 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.Dispatchers
+import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.newSingleThreadContext
+import kotlinx.coroutines.experimental.runBlocking
 
 fun main(args: Array<String>) = runBlocking<Unit> {
     fun getThreadName() = Thread.currentThread().name
     launch {
-        println("main runBlocking      : I'm working in thread ${getThreadName()}")
+        println("examples.main runBlocking      : I'm working in thread ${getThreadName()}")
     }
     launch(Dispatchers.Unconfined) {
         println("Unconfined            : I'm working in thread ${getThreadName()}")

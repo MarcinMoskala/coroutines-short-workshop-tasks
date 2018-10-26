@@ -1,5 +1,3 @@
-@file:Suppress("RedundantSuspendModifier", "unused", "DEPRECATION", "UNUSED_PARAMETER")
-
 package examples
 
 import kotlinx.coroutines.experimental.*
@@ -19,7 +17,7 @@ fun main(args: Array<String>) = runBlocking {
             println("Throwing exception from scope")
             throw AssertionError()
         }
-    } catch(e: AssertionError) {
+    } catch (e: AssertionError) {
         println("Caught assertion error")
     }
 }
