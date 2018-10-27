@@ -3,12 +3,15 @@ package examples
 import kotlinx.coroutines.experimental.GlobalScope
 import kotlinx.coroutines.experimental.delay
 import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.experimental.runBlocking
 
 fun main(args: Array<String>) {
-    GlobalScope.launch {
+    val job = GlobalScope.launch {
         delay(1000L)
         println("World!")
     }
     println("Hello,")
-    Thread.sleep(2000L)
+    runBlocking {
+        job.join()
+    }
 }

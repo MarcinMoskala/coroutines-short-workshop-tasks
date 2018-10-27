@@ -1,15 +1,20 @@
 package examples
 
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.*
 
-fun main(args: Array<String>) = runBlocking {
-    GlobalScope.launch {
-        delay(1000L)
-        println("World!")
+fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
+
+fun main(args: Array<String>) = runBlocking(CoroutineName("main")) {
+    log("Started main coroutine")
+    val v1 = async(CoroutineName("v1coroutine")) {
+        delay(500)
+        log("Computing v1")
+        252
     }
-    println("Hello,")
-    delay(2000L)
+    val v2 = async(CoroutineName("v2coroutine")) {
+        delay(1000)
+        log("Computing v2")
+        6
+    }
+    log("The answer for v1 / v2 = ${v1.await() / v2.await()}")
 }

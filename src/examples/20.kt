@@ -1,23 +1,18 @@
-package examples
+package examples.n3
 
+import examples.massiveRun
 import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.experimental.sync.Mutex
+import kotlinx.coroutines.experimental.sync.withLock
+
+private val mutex = Mutex()
+private var counter = 0
 
 fun main(args: Array<String>) = runBlocking {
-    try {
-        supervisorScope {
-            launch {
-                try {
-                    println("Child is sleeping")
-                    delay(Long.MAX_VALUE)
-                } finally {
-                    println("Child is cancelled")
-                }
-            }
-            yield()
-            println("Throwing exception from scope")
-            throw AssertionError()
+    GlobalScope.massiveRun {
+        mutex.withLock {
+            counter++
         }
-    } catch (e: AssertionError) {
-        println("Caught assertion error")
     }
+    println("Counter = $counter")
 }

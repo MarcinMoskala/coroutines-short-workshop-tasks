@@ -1,25 +1,27 @@
 package examples
 
-import kotlinx.coroutines.experimental.coroutineScope
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.*
 
-fun main(args: Array<String>) = runBlocking {
-    launch {
-        delay(200L)
-        println("Task from runBlocking")
-    }
-
-    coroutineScope {
-        launch {
-            delay(500L)
-            println("Task from nested launch")
+suspend fun failedConcurrentSum(): Int = coroutineScope {
+    val one = async {
+        try {
+            delay(Long.MAX_VALUE)
+            42
+        } finally {
+            println("First child was cancelled")
         }
-
-        delay(100L)
-        println("Task from coroutine scope")
     }
+    val two = async<Int> {
+        println("2nd child throws an exception")
+        throw ArithmeticException()
+    }
+    one.await() + two.await()
+}
 
-    println("Coroutine scope is over")
+fun main(args: Array<String>) = runBlocking<Unit> {
+    try {
+        failedConcurrentSum()
+    } catch (e: ArithmeticException) {
+        println("Computation failed with ArithmeticException")
+    }
 }

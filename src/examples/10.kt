@@ -1,22 +1,22 @@
 package examples
 
-import kotlinx.coroutines.experimental.Dispatchers
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.newSingleThreadContext
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.*
 
-fun main(args: Array<String>) = runBlocking<Unit> {
-    fun getThreadName() = Thread.currentThread().name
+fun main(args: Array<String>) = runBlocking {
     launch {
-        println("examples.main runBlocking      : I'm working in thread ${getThreadName()}")
+        delay(200L)
+        println("Task from runBlocking")
     }
-    launch(Dispatchers.Unconfined) {
-        println("Unconfined            : I'm working in thread ${getThreadName()}")
+
+    coroutineScope {
+        launch {
+            delay(500L)
+            println("Task from nested launch")
+        }
+
+        delay(100L)
+        println("Task from coroutine scope")
     }
-    launch(Dispatchers.Default) {
-        println("Default               : I'm working in thread ${getThreadName()}")
-    }
-    launch(newSingleThreadContext("MyOwnThread")) {
-        println("newSingleThreadContext: I'm working in thread ${getThreadName()}")
-    }
+
+    println("Coroutine scope is over")
 }

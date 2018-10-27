@@ -1,30 +1,18 @@
-package examples
+package examples.n2
 
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.coroutineScope
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
+import examples.massiveRun
+import kotlinx.coroutines.experimental.*
 
-fun main(args: Array<String>) = runBlocking<Unit> {
-    try {
-        failedConcurrentSum2()
-    } catch (e: ArithmeticException) {
-        println("Computation failed with ArithmeticException")
-    }
-}
+private var counter = 0
 
-suspend fun failedConcurrentSum2(): Int = coroutineScope {
-    val one = async {
-        try {
-            delay(Long.MAX_VALUE)
-            42
-        } finally {
-            println("First child was cancelled")
+fun main(args: Array<String>) = runBlocking {
+    val counterContext =
+            newSingleThreadContext("CounterContext")
+
+    GlobalScope.massiveRun {
+        withContext(counterContext) {
+            counter++
         }
     }
-    val two = async<Int> {
-        println("Second child throws an exception")
-        throw ArithmeticException()
-    }
-    one.await() + two.await()
+    println("Counter = $counter")
 }

@@ -1,16 +1,19 @@
 package examples
 
-import kotlinx.coroutines.experimental.CoroutineExceptionHandler
-import kotlinx.coroutines.experimental.GlobalScope
-import kotlinx.coroutines.experimental.launch
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.*
 
-fun main(args: Array<String>) = runBlocking {
-    val handler = CoroutineExceptionHandler { _, exception ->
-        println("Caught $exception")
+fun main(args: Array<String>) = runBlocking<Unit> {
+    fun getThreadName() = Thread.currentThread().name
+    launch {
+        println("main runBlocking      : I'm working in thread ${getThreadName()}")
     }
-    val job = GlobalScope.launch(handler) {
-        throw AssertionError()
+    launch(Dispatchers.Unconfined) {
+        println("Unconfined            : I'm working in thread ${getThreadName()}")
     }
-    job.join() // Caught java.lang.AssertionError
+    launch(Dispatchers.Default) {
+        println("Default               : I'm working in thread ${getThreadName()}")
+    }
+    launch(newSingleThreadContext("MyOwnThread")) {
+        println("newSingleThreadContext: I'm working in thread ${getThreadName()}")
+    }
 }

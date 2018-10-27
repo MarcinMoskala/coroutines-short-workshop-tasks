@@ -2,18 +2,20 @@ package examples
 
 import kotlinx.coroutines.experimental.*
 
-val threadLocal = ThreadLocal<String?>()
+var counter = 0
 
 fun main(args: Array<String>) = runBlocking {
-    fun threadName() = Thread.currentThread().name
-
-    threadLocal.set("examples.main")
-    println("Pre-examples.main, current thread: ${threadName()}, thread local value: '${threadLocal.get()}'")
-    val job = launch(Dispatchers.Default + threadLocal.asContextElement(value = "launch")) {
-        println("Launch, thread: ${threadName()}, value: '${threadLocal.get()}'")
-        yield()
-        println("Yielded, thread: ${threadName()}, value: '${threadLocal.get()}'")
+    GlobalScope.massiveRun {
+        counter++
     }
-    job.join()
-    println("Post-examples.main, thread: ${threadName()}, value: '${threadLocal.get()}'")
+    println("Counter = ${counter}")
+}
+
+suspend fun CoroutineScope.massiveRun(action: suspend () -> Unit) {
+    val jobs = List(1000) {
+        launch {
+            repeat(1000) { action() }
+        }
+    }
+    jobs.forEach { it.join() }
 }

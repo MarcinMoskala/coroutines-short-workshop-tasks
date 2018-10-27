@@ -1,23 +1,17 @@
 package examples
 
-import kotlinx.coroutines.experimental.CoroutineName
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.*
 
-fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
-
-fun main(args: Array<String>) = runBlocking(CoroutineName("examples.main")) {
-    log("Started examples.main coroutine")
-    val v1 = async(CoroutineName("v1coroutine")) {
-        delay(500)
-        log("Computing v1")
-        252
+fun main(args: Array<String>) = runBlocking {
+    val handler = CoroutineExceptionHandler { _, exception ->
+        println("Caught $exception")
     }
-    val v2 = async(CoroutineName("v2coroutine")) {
-        delay(1000)
-        log("Computing v2")
-        6
+    supervisorScope {
+        launch(handler) {
+            println("Child throws an exception")
+            throw AssertionError()
+        }
+        println("Scope is completing")
     }
-    log("The answer for v1 / v2 = ${v1.await() / v2.await()}")
+    println("Scope is completed")
 }

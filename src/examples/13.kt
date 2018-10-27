@@ -1,30 +1,23 @@
 package examples
 
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.coroutineScope
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.experimental.*
 import kotlin.system.measureTimeMillis
 
-suspend fun doSomethingUsefulOne(): Int {
-    delay(1000)
-    return 1
-}
-
-suspend fun doSomethingUsefulTwo(): Int {
-    delay(1000)
-    return 2
-}
-
-suspend fun concurrentSum(): Int = coroutineScope {
-    val one = async { doSomethingUsefulOne() }
-    val two = async { doSomethingUsefulTwo() }
-    one.await() + two.await()
-}
-
 fun main(args: Array<String>) = runBlocking {
-    val time = measureTimeMillis {
-        println("The answer is ${concurrentSum()}")
+    val job = GlobalScope.launch {
+        println("Throwing exception from launch")
+        throw IndexOutOfBoundsException()
     }
-    println("Completed in $time ms")
+    job.join()
+    println("Joined failed job")
+    val deferred = GlobalScope.async {
+        println("Throwing exception from async")
+        throw ArithmeticException()
+    }
+    try {
+        deferred.await()
+        println("Unreached")
+    } catch (e: ArithmeticException) {
+        println("Caught ArithmeticException")
+    }
 }

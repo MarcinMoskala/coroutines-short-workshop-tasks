@@ -12,8 +12,8 @@ fun main(args: Array<String>) = runBlocking {
         }
     }
     delay(1300L) // delay a bit
-    println("examples.main: I'm tired of waiting!")
+    println("main: I'm tired of waiting!")
     job.cancel()
     job.join()
-    println("examples.main: Now I can quit.")
+    println("main: Now I can quit.")
 }

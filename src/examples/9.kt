@@ -1,18 +1,30 @@
 package examples
 
-import kotlin.coroutines.experimental.Continuation
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.experimental.runBlocking
+import java.util.*
 
-public interface ContinuationInterceptor : CoroutineContext.Element {
+suspend fun makeAsyncCalculations(): String {
+    val one = async { doSomethingUsefulOne() }
+    val two = async { doSomethingUsefulTwo() }
+    return "The answer is ${one.await() + two.await()}"
+}
 
-    public fun <T> interceptContinuation(
-            continuation: Continuation<T>
-    ): Continuation<T>
+suspend fun doSomethingUsefulOne(): Int {
+    delay(1000)
+    println("I am done")
+    return 1
+}
 
-    public fun releaseInterceptedContinuation(
-            continuation: Continuation<*>
-    ) {
-    }
+val random = Random()
 
-    companion object Key : CoroutineContext.Key<ContinuationInterceptor>
+suspend fun doSomethingUsefulTwo(): Int {
+    delay(100)
+    if (random.nextBoolean()) throw Error() else return 2
+}
+
+fun main(args: Array<String>) = runBlocking {
+    val value = makeAsyncCalculations()
+    println(value)
 }
