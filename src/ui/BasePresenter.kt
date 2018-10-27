@@ -13,7 +13,7 @@ abstract class BasePresenter(val onError: (Throwable) -> Unit = {}): CoroutineSc
     val handler = CoroutineExceptionHandler { _, throwable ->
         onError(throwable)
     }
-    override val coroutineContext = UI + handler + Job()
+    override val coroutineContext = UI + handler + SupervisorJob()
 
     fun onDestroy() {
         coroutineContext.cancel()
