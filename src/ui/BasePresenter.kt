@@ -65,6 +65,7 @@ class BasePresenterTests {
                 }
         )
         presenter.onCreate()
+        delay(100)
         presenter.onDestroy()
         delay(100)
         threads.forEach {
@@ -81,7 +82,7 @@ class BasePresenterTests {
                 onError = { errors += it }
         )
         presenter.onCreate()
-        delay(100)
+        delay(200)
         assertEquals(listOf(error, error), errors)
     }
 }
