@@ -8,9 +8,15 @@ import kotlin.test.assertEquals
 val UI = newSingleThreadContext("UIThread") // Normally it will be Dispatchers.Main
 
 // TODO: Edit this class
-abstract class BasePresenter(val onError: (Throwable) -> Unit = {}) {
+abstract class BasePresenter(val onError: (Throwable) -> Unit = {}): CoroutineScope {
+
+    val handler = CoroutineExceptionHandler { _, throwable ->
+        onError(throwable)
+    }
+    override val coroutineContext = UI + handler + Job()
 
     fun onDestroy() {
+        coroutineContext.cancel()
     }
 }
 
