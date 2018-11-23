@@ -1,23 +1,16 @@
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
-fun main(args: Array<String>) = runBlocking {
-    try {
-        supervisorScope {
-            launch {
-                try {
-                    println("Child is sleeping")
-                    delay(Long.MAX_VALUE)
-                } finally {
-                    println("Child is cancelled")
-                }
-            }
-            yield()
-            println("Throwing exception from scope")
-            throw AssertionError()
+fun main(args: Array<String>) = runBlocking<Unit> {
+    supervisorScope {
+        launch(CoroutineExceptionHandler { _, _ ->  }) {
+            delay(1000)
+            throw AssertionError("Cancelled")
         }
-    } catch(e: AssertionError) {
-        println("Caught assertion error")
+        launch {
+            delay(2000)
+            println("AAA")
+        }
     }
 }

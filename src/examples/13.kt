@@ -1,6 +1,6 @@
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) = runBlocking {

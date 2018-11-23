@@ -1,6 +1,6 @@
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
 

@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.Test
-import kotlin.coroutines.experimental.buildSequence
 import kotlin.test.assertEquals
 
-val primes = buildSequence<Int> {
+val primes = sequence<Int> {
     TODO()
 }
 

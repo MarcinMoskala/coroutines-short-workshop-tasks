@@ -1,8 +1,8 @@
 package ui
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import org.junit.jupiter.api.Test
-import kotlin.coroutines.experimental.CoroutineContext
+import kotlin.coroutines.CoroutineContext
 import kotlin.test.assertEquals
 
 val UI = newSingleThreadContext("UIThread") // Normally it will be Dispatchers.Main
@@ -12,6 +12,11 @@ abstract class BasePresenter(val onError: (Throwable) -> Unit = {}) {
 
     fun onDestroy() {
     }
+}
+
+@Deprecated("Simulates old way", ReplaceWith("GlobalScope.launch(block = block)", "kotlinx.coroutines.GlobalScope", "kotlinx.coroutines.launch"))
+fun launch(block: suspend CoroutineScope.()->Unit) {
+    GlobalScope.launch(block = block)
 }
 
 @Suppress("FunctionName")

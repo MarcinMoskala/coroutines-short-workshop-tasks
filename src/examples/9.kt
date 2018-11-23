@@ -1,13 +1,14 @@
 package examples
 
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.delay
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 suspend fun makeAsyncCalculations(): String {
-    val one = async { doSomethingUsefulOne() }
-    val two = async { doSomethingUsefulTwo() }
+    val one = GlobalScope.async { doSomethingUsefulOne() }
+    val two = GlobalScope.async { doSomethingUsefulTwo() }
     return "The answer is ${one.await() + two.await()}"
 }
 

@@ -1,8 +1,8 @@
 package examples
 
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.coroutineScope
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import kotlin.system.measureTimeMillis
 
 suspend fun makeAsyncCalculationsInCoroutineScope(): String = coroutineScope {

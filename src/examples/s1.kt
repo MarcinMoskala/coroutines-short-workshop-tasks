@@ -1,6 +1,6 @@
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 var counter = 0
 

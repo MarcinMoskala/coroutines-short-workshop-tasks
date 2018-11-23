@@ -1,6 +1,6 @@
 package backend
 
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 import java.lang.Error
 
 data class User(val name: String)

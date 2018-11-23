@@ -1,6 +1,6 @@
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 import kotlin.concurrent.thread
 
 fun main(args: Array<String>) = runBlocking {

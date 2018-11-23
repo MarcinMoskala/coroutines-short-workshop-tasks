@@ -1,7 +1,7 @@
 package examples.n2
 
 import examples.massiveRun
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 private var counter = 0
 

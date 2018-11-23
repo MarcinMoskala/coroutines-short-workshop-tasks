@@ -1,6 +1,6 @@
 package examples
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 suspend fun failedConcurrentSum(): Int = coroutineScope {
     val one = async {

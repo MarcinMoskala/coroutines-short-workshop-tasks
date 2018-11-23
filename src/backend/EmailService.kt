@@ -1,6 +1,6 @@
 package backend
 
-import kotlinx.coroutines.experimental.delay
+import kotlinx.coroutines.delay
 
 class EmailService {
 

@@ -1,4 +1,4 @@
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 import java.util.Random
 
 // We have a worker who makes machines every 800ms as long as there is less than 5 of them

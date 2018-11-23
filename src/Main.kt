@@ -1,4 +1,5 @@
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 fun main(args: Array<String>): Unit = runBlocking {
     println("Started!")

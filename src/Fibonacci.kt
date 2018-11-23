@@ -1,8 +1,7 @@
 import org.junit.jupiter.api.Test
-import kotlin.coroutines.experimental.buildSequence
 import kotlin.test.assertEquals
 
-val fibonacci = buildSequence<Int> {
+val fibonacci = sequence<Int> {
     TODO()
 }
 

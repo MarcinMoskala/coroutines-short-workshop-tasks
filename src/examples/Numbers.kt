@@ -1,8 +1,6 @@
 package examples
 
-import kotlin.coroutines.experimental.buildSequence
-
-val childNumbers = buildSequence {
+val childNumbers = sequence {
     println("Um, first number is... one!")
     yield(1)
 
