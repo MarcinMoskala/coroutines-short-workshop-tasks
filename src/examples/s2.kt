@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 private var counter = AtomicInteger()
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     GlobalScope.massiveRun {
         counter.incrementAndGet()
     }

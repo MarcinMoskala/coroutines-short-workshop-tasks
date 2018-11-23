@@ -11,7 +11,7 @@ suspend fun makeAsyncCalculationsInCoroutineScope(): String = coroutineScope {
     "The answer is ${one.await() + two.await()}"
 }
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     val value = makeAsyncCalculationsInCoroutineScope()
     println(value)
 }

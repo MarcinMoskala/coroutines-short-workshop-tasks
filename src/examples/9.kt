@@ -25,7 +25,7 @@ suspend fun doSomethingUsefulTwo(): Int {
     if (random.nextBoolean()) throw Error() else return 2
 }
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     val value = makeAsyncCalculations()
     println(value)
 }

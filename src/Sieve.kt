@@ -17,7 +17,7 @@ fun getPrimeNumbers(num: Int): List<Int> {
     return primes
 }
 
-fun main(args: Array<String>) {
+fun main() {
     print(getPrimeNumbers(20))
     // print(primes.take(20).toList())
 }

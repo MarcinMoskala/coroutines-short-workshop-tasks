@@ -6,7 +6,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     GlobalScope.launch {
         delay(1000L)
         println("World!")

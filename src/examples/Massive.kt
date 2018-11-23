@@ -3,7 +3,7 @@ package examples
 import kotlinx.coroutines.*
 import kotlin.concurrent.thread
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     repeat(100_000) {
         launch {
             delay(1000L)
@@ -13,7 +13,7 @@ fun main(args: Array<String>) = runBlocking {
 }
 
 // No! Don't do it! Very bed idea on threads
-//fun main(args: Array<String>) {
+//fun main() {
 //    repeat(100_000) {
 //        thread {
 //            Thread.sleep(1000L)

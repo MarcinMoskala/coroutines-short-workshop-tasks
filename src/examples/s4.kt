@@ -8,7 +8,7 @@ import kotlinx.coroutines.sync.withLock
 private val mutex = Mutex()
 private var counter = 0
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     GlobalScope.massiveRun {
         mutex.withLock {
             counter++

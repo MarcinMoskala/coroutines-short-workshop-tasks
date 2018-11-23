@@ -2,7 +2,7 @@ package examples
 
 import kotlinx.coroutines.*
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     val handler = CoroutineExceptionHandler { _, exception ->
         println("Caught $exception")
     }

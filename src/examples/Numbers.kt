@@ -13,7 +13,7 @@ val childNumbers = sequence {
     println("That's all I've learned")
 }
 
-fun main(args: Array<String>) {
+fun main() {
     val iterator = childNumbers.iterator()
     println("What is first?")
     println("Yes, it is ${iterator.next()}")

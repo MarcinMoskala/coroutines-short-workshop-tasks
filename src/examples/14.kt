@@ -2,7 +2,7 @@ package examples
 
 import kotlinx.coroutines.*
 
-fun main(args: Array<String>) = runBlocking<Unit> {
+fun main() = runBlocking {
     val supervisor = SupervisorJob()
     with(CoroutineScope(coroutineContext + supervisor)) {
         launch(CoroutineExceptionHandler { _, _ ->  }) {

@@ -3,7 +3,7 @@ package examples
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     val job = GlobalScope.launch {
         println("Throwing exception from launch")
         throw IndexOutOfBoundsException()

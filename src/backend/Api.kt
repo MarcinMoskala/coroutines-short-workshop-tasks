@@ -5,7 +5,7 @@ import java.lang.Error
 
 data class User(val name: String)
 
-fun main(args: Array<String>) {
+fun main() {
     val database = Database()
     val emailService = EmailService()
     api {

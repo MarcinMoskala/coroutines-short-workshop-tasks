@@ -2,7 +2,7 @@ package examples
 
 import kotlinx.coroutines.*
 
-fun main(args: Array<String>) = runBlocking<Unit> {
+fun main() = runBlocking<Unit> {
     supervisorScope {
         launch(CoroutineExceptionHandler { _, _ ->  }) {
             delay(1000)

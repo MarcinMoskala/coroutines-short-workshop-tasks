@@ -18,7 +18,7 @@ suspend fun failedConcurrentSum(): Int = coroutineScope {
     one.await() + two.await()
 }
 
-fun main(args: Array<String>) = runBlocking<Unit> {
+fun main() = runBlocking<Unit> {
     try {
         failedConcurrentSum()
     } catch (e: ArithmeticException) {

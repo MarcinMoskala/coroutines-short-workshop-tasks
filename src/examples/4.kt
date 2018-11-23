@@ -4,7 +4,7 @@ import kotlinx.coroutines.*
 
 fun log(msg: String) = println("[${Thread.currentThread().name}] $msg")
 
-fun main(args: Array<String>) = runBlocking(CoroutineName("main")) {
+fun main() = runBlocking(CoroutineName("main")) {
     log("Started main coroutine")
     val v1 = async(CoroutineName("v1coroutine")) {
         delay(500)

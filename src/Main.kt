@@ -1,7 +1,7 @@
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
-fun main(args: Array<String>): Unit = runBlocking {
+fun main(): Unit = runBlocking {
     println("Started!")
     test()
     println("Done.")

@@ -5,7 +5,7 @@ import java.util.Random
 // Every machine produces a code using `produce` function every second. It saves this code to shared space. In case of an error, it ends working.
 // We have a single manager that once a 2 seconds takes all produced codes and prints them all. After 5 times it ends all jobs (including machines and worker).
 
-fun main(args: Array<String>) = runBlocking<Unit> {
+fun main() = runBlocking<Unit> {
     TODO()
 }
 

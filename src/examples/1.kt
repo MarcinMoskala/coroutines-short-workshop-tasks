@@ -3,11 +3,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
-fun main(args: Array<String>) {
-    GlobalScope.launch {
-        delay(1000L)
-        println("World!")
-    }
-    println("Hello,")
-    Thread.sleep(2000L)
+//fun main() {
+//    GlobalScope.launch {
+//        delay(1000L)
+//        println("World!")
+//    }
+//    println("Hello,")
+//    Thread.sleep(2000L)
+//}
+
+fun main() {
+    print("Hello, world")
 }

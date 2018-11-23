@@ -5,7 +5,7 @@ import kotlinx.coroutines.*
 
 private var counter = 0
 
-fun main(args: Array<String>) = runBlocking {
+fun main() = runBlocking {
     val counterContext =
             newSingleThreadContext("CounterContext")
 

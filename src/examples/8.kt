@@ -2,7 +2,7 @@ package examples
 
 import kotlinx.coroutines.*
 
-fun main(args: Array<String>) = runBlocking<Unit> {
+fun main() = runBlocking<Unit> {
     fun getThreadName() = Thread.currentThread().name
     launch {
         println("main runBlocking      : I'm working in thread ${getThreadName()}")
